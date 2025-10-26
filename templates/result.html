@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Scraping Result</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f8fafc;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .header {
+            background: #0d9488;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 24px;
+        }
+        .error {
+            color: #b91c1c;
+            background: #fee;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .product-img {
+            max-width: 300px;
+            height: auto;
+            margin: 16px 0;
+            border: 1px solid #eee;
+            border-radius: 6px;
+        }
+        .field {
+            margin: 12px 0;
+        }
+        .label {
+            font-weight: bold;
+            color: #4b5563;
+        }
+        .download-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #0d9488;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .download-btn:hover {
+            background: #0f766e;
+        }
+        a.back {
+            display: inline-block;
+            margin-top: 16px;
+            color: #0d9488;
+            text-decoration: none;
+        }
+        a.back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✅ Product Scraped!</h1>
+        </div>
+        <div class="content">
+            {% if error %}
+                <div class="error">{{ error }}</div>
+                <a href="/" class="back">← Try Again</a>
+            {% else %}
+                {% if product.image_url != "N/A" %}
+                    <img src="{{ product.image_url }}" class="product-img" alt="Product">
+                {% endif %}
+                <div class="field">
+                    <div class="label">Title:</div>
+                    <div>{{ product.title }}</div>
+                </div>
+                <div class="field">
+                    <div class="label">Price:</div>
+                    <div>{{ product.price }}</div>
+                </div>
+                <div class="field">
+                    <div class="label">Description:</div>
+                    <div>{{ product.description }}</div>
+                </div>
+                <div class="field">
+                    <div class="label">Source URL:</div>
+                    <div><a href="{{ product.source_url }}" target="_blank">{{ product.source_url }}</a></div>
+                </div>
+                <a href="{{ csv_download }}" class="download-btn">📥 Download CSV Report</a>
+                <br>
+                <a href="/" class="back">← Scrape Another Product</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
